@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "Discipline & Focus Engine",
+  "short_name": "Discipline",
+  "description": "Discipline Engine - 4 pillars, streak, focus timer",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "th",
+  "background_color": "#0A0A0C",
+  "theme_color": "#0A0A0C",
+  "icons": [
+    { "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzBBMEEwQyIvPjx0ZXh0IHg9IjI1NiIgeT0iMzAwIiBmb250LWZhbWlseT0iTWVubG8sQ29uc29sYXMsbW9ub3NwYWNlIiBmb250LXNpemU9IjE3MCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFEQjk1NCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Jmd0O188L3RleHQ+PC9zdmc+Cg==", "sizes": "192x192", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzBBMEEwQyIvPjx0ZXh0IHg9IjI1NiIgeT0iMzAwIiBmb250LWZhbWlseT0iTWVubG8sQ29uc29sYXMsbW9ub3NwYWNlIiBmb250LXNpemU9IjE3MCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzFEQjk1NCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Jmd0O188L3RleHQ+PC9zdmc+Cg==", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

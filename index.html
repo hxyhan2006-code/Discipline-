@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0A0A0C">
+  <title>Discipline &amp; Focus Engine</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Discipline">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').catch(function (err) {
+          console.warn('SW register failed:', err);
+        });
+      });
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- HEADER -->
+    <header class="topbar">
+      <h1 class="brand"><span class="prompt">&gt;_</span> discipline<span class="brand-dim">.engine</span></h1>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-label">วันที่</span>
+          <time class="stat-value stat-date" id="current-date">--</time>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Streak</span>
+          <span class="stat-value"><span id="streak-count">0</span><small>วัน</small></span>
+        </div>
+        <div class="stat stat-score">
+          <span class="stat-label">Discipline Score</span>
+          <span class="stat-value"><span id="discipline-score">0</span><small>/100</small></span>
+          <div class="bar" id="score-meter" role="progressbar" aria-label="Discipline Score" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="bar-fill" id="score-bar"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- SECTION 1: THE 4 NON-NEGOTIABLES -->
+      <section aria-labelledby="h-pillars">
+        <h2 class="section-title" id="h-pillars">The 4 Non-Negotiables</h2>
+        <div class="pillars">
+
+          <article class="card" id="card-circadian">
+            <div class="card-head">
+              <div><h3>Circadian Anchor</h3><p class="sub">เวลานอน-ตื่น</p></div>
+              <span class="badge" id="circadian-status">รอ Check-in</span>
+            </div>
+            <div class="kv">
+              <div><span class="k">นอน</span><span class="v" id="target-sleep">23:00</span></div>
+              <div><span class="k">ตื่น</span><span class="v" id="target-wake">06:00</span></div>
+            </div>
+            <p class="note" id="wake-log">ยังไม่ได้ Check-in ตื่นนอน</p>
+            <button class="btn btn-primary" id="btn-wake-checkin" type="button">Check-in ตื่นนอน</button>
+          </article>
+
+          <article class="card" id="card-money">
+            <div class="card-head">
+              <div><h3>Money Maker</h3><p class="sub">งานคลิป</p></div>
+              <span class="badge" id="money-status">ยังไม่เริ่ม</span>
+            </div>
+            <p class="note" id="money-note">ยังไม่มี Proof of Work วันนี้</p>
+            <button class="btn" id="btn-open-focus" type="button">เปิดตัวจับเวลา Focus</button>
+            <div class="field">
+              <input type="text" id="proof-input" placeholder="Proof of Work: ลิงก์ / งานที่เสร็จ" aria-label="Proof of Work" autocomplete="off">
+              <button class="btn btn-primary" id="btn-submit-proof" type="button">ส่ง</button>
+            </div>
+          </article>
+
+          <article class="card" id="card-brain">
+            <div class="card-head">
+              <div><h3>Brain Upgrade</h3><p class="sub">การเรียนรู้</p></div>
+              <span class="badge" id="brain-status">ยังไม่บันทึก</span>
+            </div>
+            <p class="note" id="learning-note">วันนี้ได้เรียนรู้อะไรใหม่ แค่ 1 บรรทัด</p>
+            <div class="field">
+              <input type="text" id="learning-input" maxlength="140" placeholder="เรียนรู้อะไรใหม่วันนี้..." aria-label="สิ่งที่เรียนรู้วันนี้" autocomplete="off">
+              <button class="btn btn-primary" id="btn-save-learning" type="button">บันทึก</button>
+            </div>
+          </article>
+
+          <article class="card" id="card-body">
+            <div class="card-head">
+              <div><h3>Body Baseline</h3><p class="sub">ดูแลร่างกาย</p></div>
+              <span class="badge" id="body-status">ยังไม่ทำ</span>
+            </div>
+            <p class="note" id="body-note">วันนี้ยังไม่ได้ออกกำลังกาย</p>
+            <button class="btn toggle" id="btn-workout-toggle" type="button" aria-pressed="false">
+              <span class="off">✕ ยังไม่ทำ</span><span class="on">✓ ทำแล้ว</span>
+            </button>
+          </article>
+
+        </div>
+      </section>
+
+      <div class="lower">
+
+        <!-- SECTION 2: FOCUS LOCKDOWN TIMER -->
+        <section id="focus-timer" aria-labelledby="h-timer">
+          <h2 class="section-title" id="h-timer">Focus Lockdown Timer</h2>
+          <div class="card timer-card" id="timer-card">
+            <p class="timer-status" id="timer-status">พร้อมเริ่ม</p>
+            <div class="timer-display" id="timer-display" role="timer">90:00</div>
+            <div class="timer-track" aria-hidden="true"><div class="timer-fill" id="timer-fill"></div></div>
+            <div class="btn-row">
+              <button class="btn btn-primary" id="btn-start" type="button">Start</button>
+              <button class="btn" id="btn-pause" type="button">Pause</button>
+              <button class="btn btn-danger" id="btn-reset" type="button">Reset</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: ALTER-EGO COMMAND CARD -->
+        <section aria-labelledby="h-alter">
+          <h2 class="section-title" id="h-alter">Alter-Ego Command Card</h2>
+          <div class="card alter-card">
+            <div class="card-head">
+              <div><h3>Future Self Review</h3><p class="sub">คำตักเตือนและบทวิเคราะห์จากตัวตนในอนาคต</p></div>
+            </div>
+            <div class="terminal" id="alter-ego-log" role="log" aria-live="polite">
+              <p class="msg msg-ai"><span class="who">future_self</span>รอข้อมูลของวันนี้ ทำ Non-Negotiables ให้ครบ แล้วค่อยมารีวิว</p>
+            </div>
+            <form class="field" id="chat-form" autocomplete="off">
+              <input type="text" id="chat-input" placeholder="คุยกับตัวตนในอนาคต..." aria-label="ข้อความถึง Future Self">
+              <button class="btn btn-primary" id="btn-send" type="submit">ส่ง</button>
+            </form>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="ai.js"></script>
+</body>
+</html>
